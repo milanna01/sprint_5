@@ -101,8 +101,8 @@ text
 
 ## 🔧 requirements.txt
 ```txt
-selenium==4.35.0
-pytest==8.4.1
+pytest==9.0.1
+selenium==4.38.0
 🚀 Основные команды для вас:
 bash
 # Из папки Sprint_5 запускайте:
