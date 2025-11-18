@@ -64,11 +64,11 @@ Sprint_5/
 Переключение разделов конструктора (test_constructor_sections.py)
 
 🛠 Технологии
-Python 3.11
+Python 3.13.5
 
-Selenium WebDriver 4.35
+Selenium WebDriver 4.38.0
 
-pytest 8.4.1
+pytest 9.0.1
 
 Chrome Driver
 
