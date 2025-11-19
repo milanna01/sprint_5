@@ -1,59 +1,47 @@
 import sys
 import os
-# Добавляем корневую папку в путь поиска
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from locators import TestLocators
 from data import TestUser
+from helpers import fill_login_credentials, submit_login, wait_for_successful_login
 
 
 class TestLogin:
     """Тесты авторизации в системе Stellar Burgers"""
     
     def test_login_via_main_login_button(self, driver):
-        """
-        Успешный вход через кнопку 'Войти в акканет' на главной странице
-        """
+        """Успешный вход через кнопку 'Войти в аккаунт' на главной странице"""
         driver.find_element(*TestLocators.BUTTON_LOGIN_MAIN).click()
         
         WebDriverWait(driver, 10).until(
             EC.visibility_of_element_located(TestLocators.BUTTON_REGISTER)
         )
         
-        driver.find_element(*TestLocators.INPUT_EMAIL_AUTH).send_keys(TestUser.EXISTING_EMAIL)
-        driver.find_element(*TestLocators.INPUT_PASSWORD_AUTH).send_keys(TestUser.EXISTING_PASSWORD)
-        driver.find_element(*TestLocators.BUTTON_LOGIN).click()
+        fill_login_credentials(driver)
+        submit_login(driver)
+        wait_for_successful_login(driver)
         
-        WebDriverWait(driver, 10).until(
-            EC.visibility_of_element_located(TestLocators.BUTTON_MAKE_ORDER)
-        )
         assert driver.find_element(*TestLocators.BUTTON_MAKE_ORDER).is_displayed()
 
     def test_login_via_personal_account_button(self, driver):
-        """
-        Успешный вход через кнопку 'Личный кабинет'
-        """
+        """Успешный вход через кнопку 'Личный кабинет'"""
         driver.find_element(*TestLocators.BUTTON_PERSONAL_ACCOUNT).click()
         
         WebDriverWait(driver, 10).until(
             EC.visibility_of_element_located(TestLocators.BUTTON_REGISTER)
         )
         
-        driver.find_element(*TestLocators.INPUT_EMAIL_AUTH).send_keys(TestUser.EXISTING_EMAIL)
-        driver.find_element(*TestLocators.INPUT_PASSWORD_AUTH).send_keys(TestUser.EXISTING_PASSWORD)
-        driver.find_element(*TestLocators.BUTTON_LOGIN).click()
+        fill_login_credentials(driver)
+        submit_login(driver)
+        wait_for_successful_login(driver)
         
-        WebDriverWait(driver, 10).until(
-            EC.visibility_of_element_located(TestLocators.BUTTON_MAKE_ORDER)
-        )
         assert driver.find_element(*TestLocators.BUTTON_MAKE_ORDER).is_displayed()
 
     def test_login_via_registration_form(self, driver):
-        """
-        Успешный вход через форму регистрации
-        """
+        """Успешный вход через форму регистрации"""
         driver.find_element(*TestLocators.BUTTON_LOGIN_MAIN).click()
         WebDriverWait(driver, 10).until(
             EC.visibility_of_element_located(TestLocators.BUTTON_REGISTER)
@@ -66,19 +54,14 @@ class TestLogin:
         
         driver.find_element(*TestLocators.BUTTON_LOGIN_IN_REG_FORM).click()
         
-        driver.find_element(*TestLocators.INPUT_EMAIL_AUTH).send_keys(TestUser.EXISTING_EMAIL)
-        driver.find_element(*TestLocators.INPUT_PASSWORD_AUTH).send_keys(TestUser.EXISTING_PASSWORD)
-        driver.find_element(*TestLocators.BUTTON_LOGIN).click()
+        fill_login_credentials(driver)
+        submit_login(driver)
+        wait_for_successful_login(driver)
         
-        WebDriverWait(driver, 10).until(
-            EC.visibility_of_element_located(TestLocators.BUTTON_MAKE_ORDER)
-        )
         assert driver.find_element(*TestLocators.BUTTON_MAKE_ORDER).is_displayed()
         
     def test_login_via_password_recovery_form(self, driver):
-        """
-        Успешный вход через форму восстановления пароля
-        """
+        """Успешный вход через форму восстановления пароля"""
         driver.find_element(*TestLocators.BUTTON_PERSONAL_ACCOUNT).click()
         WebDriverWait(driver, 10).until(
             EC.visibility_of_element_located(TestLocators.BUTTON_REGISTER)
@@ -94,11 +77,9 @@ class TestLogin:
         WebDriverWait(driver, 10).until(
             EC.visibility_of_element_located(TestLocators.BUTTON_REGISTER)
         )
-        driver.find_element(*TestLocators.INPUT_EMAIL_AUTH).send_keys(TestUser.EXISTING_EMAIL)
-        driver.find_element(*TestLocators.INPUT_PASSWORD_AUTH).send_keys(TestUser.EXISTING_PASSWORD)
-        driver.find_element(*TestLocators.BUTTON_LOGIN).click()
         
-        WebDriverWait(driver, 10).until(
-            EC.visibility_of_element_located(TestLocators.BUTTON_MAKE_ORDER)
-        )
+        fill_login_credentials(driver)
+        submit_login(driver)
+        wait_for_successful_login(driver)
+        
         assert driver.find_element(*TestLocators.BUTTON_MAKE_ORDER).is_displayed()
